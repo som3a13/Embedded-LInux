@@ -34,6 +34,8 @@ class FileWriter:
         list.reverse()
         bits = ''.join(map(str, list))
         return bits
+    def __del__():
+        pass
 
 if __name__ == "__main__":
     file_writer = FileWriter("/init.c")
