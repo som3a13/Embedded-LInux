@@ -4,8 +4,8 @@ response=requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
 if response.status_code == 200:
     data=response.json()
     print(data['bpi']['USD'])
-###############################################
-#Data after formating
+#############################################
+##Data after formating
 {
    "time":{
       "updated":"Oct 5, 2023 22:07:00 UTC",
