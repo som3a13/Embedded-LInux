@@ -15,7 +15,7 @@ def extract_prototypes(header_file):
             else:
                 prototypes.append(f"IDX{str(id_counter).zfill(3)} {line}")
                 id_counter += 1
-    return prototypes
+    return prototypes #list of ["ID funct", ....]
 def write_xlsx():
     xlsx_file=os.path.dirname(os.path.realpath(__file__))+"/DIO.xlsx"
     # Create a new Excel workbook
@@ -26,10 +26,14 @@ def write_xlsx():
     sheet.append(["ID", "Prototype"])
     prototypes = extract_prototypes(header_file)
 
-    # Add function prototypes to the Excel sheet
-    for prototype in prototypes:
-        sheet.append([prototype.split()[0], prototype.split(' ', 1)[1]])
+   #SPlit ID , prototype
+    proto=[prototype.split(maxsplit=1) for prototype in prototypes]
+    #print(proto)
+     # Add function prototypes to the Excel sheet
+    for prototype in proto:
+        sheet.append(prototype)
 
+        
     workbook.save(xlsx_file)
 
     print(f"Function prototypes saved to {xlsx_file}")
