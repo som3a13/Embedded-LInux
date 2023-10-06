@@ -6,15 +6,15 @@ header_file=os.path.dirname(os.path.realpath(__file__))+"/DIO.h"
 
 def extract_prototypes(header_file):
     prototypes = []
-    id_counter = 1
+   
     with open(header_file, 'r') as file:
         lines = file.readlines()
         for line in lines:
             if re.match(r'^\s*[/*#]',line):
                 continue
             else:
-                prototypes.append(f"IDX{str(id_counter).zfill(3)} {line}")
-                id_counter += 1
+                prototypes.append(line)
+                
     return prototypes #list of ["ID funct", ....]
 def write_xlsx():
     xlsx_file=os.path.dirname(os.path.realpath(__file__))+"/DIO.xlsx"
@@ -25,12 +25,16 @@ def write_xlsx():
     # Add headers to the Excel sheet
     sheet.append(["ID", "Prototype"])
     prototypes = extract_prototypes(header_file)
+    print(prototypes)
 
    #SPlit ID , prototype
-    proto=[prototype.split(maxsplit=1) for prototype in prototypes]
+    count=0
+    for i in prototypes:
+        count+=1
     #print(proto)
      # Add function prototypes to the Excel sheet
-    for data in proto:
+    for i in range(0,count):
+        data=[f"IDX00{i}",prototypes[i]]
         sheet.append(data)
 
         
