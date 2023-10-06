@@ -47,8 +47,3 @@ def write_xlsx():
 write_xlsx()
 
 
-    # proto=[prototype.split(maxsplit=1) for prototype in prototypes]
-    # print(proto)
-    #  Add function prototypes to the Excel sheet
-    # for data in proto:
-    #     sheet.append(data)
