@@ -27,14 +27,14 @@ def write_xlsx():
     prototypes = extract_prototypes(header_file)
     print(prototypes)
 
-   #SPlit ID , prototype
+ 
     count=0
     for i in prototypes:
         count+=1
-    #print(proto)
+
      # Add function prototypes to the Excel sheet
     for i in range(0,count):
-        data=[f"IDX00{i}",prototypes[i]]
+        data=[f"IDX00{i+1}",prototypes[i]]
         sheet.append(data)
 
         
@@ -43,3 +43,10 @@ def write_xlsx():
     print(f"Function prototypes saved to {xlsx_file}")
 
 write_xlsx()
+
+
+    # proto=[prototype.split(maxsplit=1) for prototype in prototypes]
+    # print(proto)
+    #  Add function prototypes to the Excel sheet
+    # for data in proto:
+    #     sheet.append(data)
