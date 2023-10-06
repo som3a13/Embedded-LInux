@@ -10,12 +10,14 @@ def extract_prototypes(header_file):
     with open(header_file, 'r') as file:
         lines = file.readlines()
         for line in lines:
-            if re.match(r'^\s*[/*#]',line):
+            if re.match(r'^\s*[/*#]',line):    ## Pass comments line and defines
                 continue
             else:
                 prototypes.append(line)
                 
-    return prototypes #list of ["ID funct", ....]
+    return prototypes 
+
+
 def write_xlsx():
     xlsx_file=os.path.dirname(os.path.realpath(__file__))+"/DIO.xlsx"
     # Create a new Excel workbook
