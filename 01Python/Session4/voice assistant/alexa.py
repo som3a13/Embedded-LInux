@@ -8,65 +8,74 @@ import pywhatkit
 import wikipedia
 import pyjokes
 
-recognize = sr.Recognizer()
-
 def speak(txt):
-    tts = gTTS(text = txt, lang = 'en', slow = True)
-    audiofile = 'audio.mp3'
+    tts = gTTS(text=txt, lang='en', slow=False)
+    audiofile = os.path.join(os.path.dirname(__file__), 'audio.mp3')
     tts.save(audiofile)
     playsound.playsound(audiofile)
     os.remove(audiofile)
-recognize.energy_threshold = 3000 
-def record(order = False):
-    with sr.Microphone(device_index=3) as source:
-        recognize.adjust_for_ambient_noise(source)
-        if order:
-            speak(order)
-        audio = recognize.listen(source)
-        request = ''
-        try:
-            request = recognize.recognize_google(audio, language = 'en')
-        except sr.UnknownValueError:
-            speak("sorry i did not get that")
-        except sr.RequestError:
-            speak("sorry Service is Down")
-        return request.lower()
+
+def record(order=False, timeout=None):
+    # Initialize the recognizer
+    if order:
+        speak(order)
+    recognizer = sr.Recognizer()
+
+    # Capture audio from the microphone
+    with sr.Microphone() as source:
+        print("Please speak something...")
+        recognizer.adjust_for_ambient_noise(source, duration=1)  # Adjust for ambient noise
+        audio = recognizer.listen(source, timeout=timeout)  # Record audio with the specified timeout
+
+    print("Recognizing")
+
+    try:
+        # Recognize the audio using Google Web Speech API
+        text = recognizer.recognize_google(audio)
+        return text.lower()
+    except sr.UnknownValueError:
+        print("Didn't capture any voice. Please try again.")
+    except sr.RequestError as e:
+        print(f"Sorry, there was an error connecting to the Google Web Speech API: {e}")
+
+
 
 def respond():
-    user_request = record()
-    if 'alexa' in user_request:
-        user_request = user_request.replace('alexa', '')
-    elif 'name' in user_request:
-        speak("Hello, it's alexa")
-    elif 'time' in user_request:
-        speak(ctime())
-    elif 'search' in user_request:
-        search = record('What do you want to google?')
-        url = 'https://google.com/search?q=' + search
-        webbrowser.get().open(url)
-    elif 'location' in user_request:
-        location = record('What is the location do you want?')
-        url = 'https://google.nl/maps/place/' + location + '/&amp'
-        webbrowser.get().open(url)
-    elif 'bye' in user_request:
-        speak('bye')
-        exit()
-    elif 'music' in user_request:
-        song = record('What song do you want to listen?')
-        pywhatkit.playonyt(song)
-    elif 'wikipedia' in user_request:
-        wiki = record('What do you want to search on wikipedia?')
-        info = wikipedia.summary(wiki,1)
-        speak(info)
-    elif 'joke' in user_request:
-        speak(pyjokes.get_joke())
-    else:
-        speak('Please say the request again')
+    while True:
+        user_request = record()
+        print(user_request)
+        if user_request is None:
+            continue  # Continue listening until user provides valid input
+
+        if 'alexa' in user_request:
+            user_request = user_request.replace('alexa', '')
+
+        elif 'name' in user_request:
+            speak("Hello, it's Alexa")
+        elif 'time' in user_request:
+            speak(ctime())   
+        elif 'search' in user_request:
+            while True:
+                speak('What do you want to Google?')
+                search = record(timeout=5)  # Set a timeout for search input (e.g., 10 seconds)
+                print(search)
+                if search is None:
+                    speak("Sorry, I didn't hear what you want to search. Please try again.")
+                    continue  # Continue asking for search input
+                else:
+                    url = 'https://google.com/search?q=' + search
+                    webbrowser.get().open(url)
+                    break  # Exit the search loop and proceed with other requests
+        elif 'joke' in user_request:
+            joke = pyjokes.get_joke()
+            speak(joke)
+        elif 'bye' in user_request:
+            speak('Goodbye!')
+            exit()
 
 speak('How can I help you?')
-while 1:
+while True:
     respond()
-        
 # import speech_recognition as sr
 # for index, name in enumerate(sr.Microphone.list_microphone_names()):
 #     print("Microphone with name \"{1}\" found for `Microphone(device_index={0})`".format(index, name))
