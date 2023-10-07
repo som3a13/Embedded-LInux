@@ -11,4 +11,4 @@ while True:
 
     rodata=client.recv(1024)
     print(f"{ip} is sending a msg to you {rodata.decode('UTF-8')}")
-    client.close
+    client.close()
