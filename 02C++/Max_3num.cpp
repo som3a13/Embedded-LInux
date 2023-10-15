@@ -42,7 +42,4 @@ void max3(){
     }
    
     printf("Max equal = %d \n",max);
-
-
-
 }
