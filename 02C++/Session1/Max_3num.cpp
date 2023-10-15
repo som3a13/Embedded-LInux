@@ -5,10 +5,12 @@
 #include <vector>
 void max3();
 void sort_num();
+void max_num();
 int  main() {
 
     //max3();
-    sort_num();
+    //sort_num();
+    max_num();
     return 0;
 }
 void max3(){
@@ -53,4 +55,15 @@ void sort_num()
     std::sort(numbers.begin(),numbers.end(),std::greater_equal<int>());
 
     std::cout << "MAX = "<<numbers[0] << std::endl;
+}
+
+void max_num()
+{
+        int x,y,z;
+    // Take input from user 
+    std::cout<<"PLease enter the 3 numbers: "<<std::endl;
+    std::cin>>x>>y>>z;
+    int ans = std::max(x,std::max(y,z));
+
+    std::cout << "MAX = "<<ans << std::endl;
 }
