@@ -24,7 +24,7 @@ int sum=0;
 //loop on char in the string and converting them to integer
 for(int i : myStr)
 {
-    int digit = i - '0';// convert char to int
+    int digit = i - '0';// convert char to int  , ASCII VAlue of 0 is 48 so  example '1'-'0'=1   49-48=1 :D
     sum +=digit;
 
 
