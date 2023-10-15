@@ -3,11 +3,7 @@
 void max3();
 int  main() {
 
-
-
     max3();
-
-
 
     return 0;
 }
@@ -23,7 +19,7 @@ void max3(){
     // Get the max of the 3 numbers
 
     int max=x;
-    if(max==y && max ==z)
+    if(max==y && max ==z) // Check if numbers are equal
     {
         std::cout<<"Numbers are equal"<<std::endl;
         max=x;
@@ -40,9 +36,9 @@ void max3(){
         max = z; 
        
     }
-    else if (z==y && z==max) {
-        max = z; 
-        
+    else
+    {
+        std::cout << "Please enter valid numbers" << std::endl;
     }
    
     printf("Max equal = %d \n",max);
