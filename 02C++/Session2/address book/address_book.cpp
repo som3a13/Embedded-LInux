@@ -3,7 +3,8 @@
 #include <vector>
 #include <fstream>
 
-std::vector<std::string>contacts;
+
+
 std::string name;
 std::string phone;
 
@@ -217,6 +218,7 @@ void loadContacts(std::vector<std::string> &contacts, const std::string &filenam
 
 
 int main() {
+    std::vector<std::string>contacts;
     while (true) {
         std::cout << "-------------------------" << std::endl;
         std::cout << "Contact Management System" << std::endl;
