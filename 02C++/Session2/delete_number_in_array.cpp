@@ -56,7 +56,8 @@ void erase2()
     auto found=std::find(arr.begin(),arr.end(),userNum);
 
     if(found !=arr.end())
-    {
+    {   
+        
         arr.erase(found);
         std::cout << "Number has been deleted." << std::endl;
     }
