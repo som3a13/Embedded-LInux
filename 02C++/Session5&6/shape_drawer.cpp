@@ -28,7 +28,7 @@ public:
     void draw() override {
         std::cout << "Draw Rectangle" << std::endl;
     }
-    ~rectangle() {}
+    ~rectangle() {std::cout << "Distructor rec is called" << std::endl;}
 };
 
 void disp(Shape &obj) {
