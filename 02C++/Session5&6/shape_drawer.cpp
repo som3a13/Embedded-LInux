@@ -7,7 +7,7 @@ private:
     int radius;
 
 public:
-    int length;
+    int length=1;
     virtual void draw() = 0; // Pure function
     Shape() {}
     virtual ~Shape() {}
@@ -24,7 +24,7 @@ public:
 
 class rectangle : public Shape {
 public:
-    rectangle() {}
+    rectangle(int w) {}
     void draw() override {
         std::cout << "Draw Rectangle" << std::endl;
     }
